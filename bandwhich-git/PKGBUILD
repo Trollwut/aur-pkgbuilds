@@ -1,0 +1,33 @@
+# Maintainer: Cedric Trollwut <trollwut@trollwut.org>
+
+pkgname=bandwhich-git
+pkgver=0.9.0.r241.bafff57
+pkgrel=1
+pkgdesc="Terminal bandwidth utilization tool (formerly known as 'what')"
+arch=('i686' 'x86_64')
+url="https://github.com/imsnif/bandwhich"
+license=('MIT')
+depends=('gcc-libs')
+makedepends=('git' 'rust' 'cargo')
+conflicts=('bandwhich')
+provides=('bandwhich')
+source=('git+https://github.com/imsnif/bandwhich.git')
+md5sums=('SKIP')
+_gitname="bandwhich"
+
+pkgver() {
+  cd "$srcdir"/"$_gitname"
+  printf "%s.r%s.%s" $(awk -F# '/version/ {print $1}' Cargo.toml|head -1|tr -d \"|cut -c10-) $(git rev-list --count HEAD) $(git rev-parse --short HEAD)
+}
+
+build() {
+  cd ${_gitname}
+  cargo clean
+  cargo build --release
+}
+
+package() {
+  cd ${_gitname}/target/release
+  install -Dm755 bandwhich "$pkgdir"/usr/bin/bandwhich
+}
+
