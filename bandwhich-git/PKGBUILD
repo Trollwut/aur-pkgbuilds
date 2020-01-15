@@ -17,7 +17,7 @@ _gitname="bandwhich"
 
 pkgver() {
   cd "$srcdir"/"$_gitname"
-  printf "%s.r%s.%s" $(awk -F# '/version/ {print $1}' Cargo.toml|head -1|tr -d \"|cut -c10-) $(git rev-list --count HEAD) $(git rev-parse --short HEAD)
+  printf "%s.r%s.%s" $(awk '/^\[package\]$/{p++;next} p==1' Cargo.toml | grep '^version\s*\=' | head -n1 | cut -d\" -f2) $(git rev-list --count HEAD) $(git rev-parse --short HEAD)
 }
 
 build() {
