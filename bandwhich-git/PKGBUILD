@@ -1,7 +1,7 @@
 # Maintainer: Cedric Trollwut <trollwut@trollwut.org>
 
 pkgname=bandwhich-git
-pkgver=0.9.0.r249.c65d6eb
+pkgver=0.9.0.r250.6cdce97
 pkgrel=1
 pkgdesc="Terminal bandwidth utilization tool (formerly known as 'what')"
 arch=('i686' 'x86_64')
